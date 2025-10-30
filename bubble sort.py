@@ -22,7 +22,7 @@ def medir_tiempo(lista):
     return fin - inicio
 
 # Pruebas
-tamanos = [1000, 10000]  #el de 100.000 demasiado largo
+tamanos = [1000, 10000, 100000]  
 
 for n in tamanos:
     # Lista aleatoria
