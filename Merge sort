@@ -1,0 +1,57 @@
+import random
+import time
+
+# Implementación de Merge Sort 
+def merge_sort(lista):
+    if len(lista) <= 1:
+        return lista
+
+    mitad = len(lista) // 2
+    izquierda = merge_sort(lista[:mitad])
+    derecha = merge_sort(lista[mitad:])
+
+    return merge(izquierda, derecha)
+
+def merge(izquierda, derecha):
+    resultado = []
+    i = j = 0
+
+    while i < len(izquierda) and j < len(derecha):
+        if izquierda[i] < derecha[j]:
+            resultado.append(izquierda[i])
+            i += 1
+        else:
+            resultado.append(derecha[j])
+            j += 1
+
+    resultado.extend(izquierda[i:])
+    resultado.extend(derecha[j:])
+    return resultado
+
+# Función auxiliar para medir tiempo de ejecución 
+def medir_tiempo_merge_sort(lista, descripcion):
+    inicio = time.time()
+    merge_sort(lista)
+    fin = time.time()
+    duracion = fin - inicio
+    print(f"{descripcion:<45} → Tiempo: {duracion:.4f} segundos")
+
+# Programa principal 
+if __name__ == "__main__":
+    print("Medición de tiempos de ejecución de Merge Sort:\n")
+
+    # Listas aleatorias
+    medir_tiempo_merge_sort([random.randint(0, 1000000) for _ in range(1000)], 
+                            "Lista aleatoria de 1 000 valores")
+    medir_tiempo_merge_sort([random.randint(0, 1000000) for _ in range(10000)], 
+                            "Lista aleatoria de 10 000 valores")
+    medir_tiempo_merge_sort([random.randint(0, 1000000) for _ in range(100000)], 
+                            "Lista aleatoria de 100 000 valores")
+
+    # Nueva: lista ya ordenada
+    medir_tiempo_merge_sort(list(range(10000)), 
+                            "Lista ordenada de 10 000 valores")
+
+    # Nueva: lista en orden inverso
+    medir_tiempo_merge_sort(list(range(10000, 0, -1)), 
+                            "Lista inversa de 10 000 valores")
