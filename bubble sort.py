@@ -1,11 +1,12 @@
 import time
 import random
 
-# Algoritmo Bubble Sort sin bibliotecas adicionales
+# =============================
+# BUBBLE SORT
+# =============================
 def bubble_sort(lista):
     n = len(lista)
     for i in range(n):
-        # Se puede optimizar verificando si hubo intercambio
         intercambiado = False
         for j in range(0, n - i - 1):
             if lista[j] > lista[j + 1]:
@@ -14,28 +15,21 @@ def bubble_sort(lista):
         if not intercambiado:
             break
 
-# Función para medir el tiempo de ejecución
-def medir_tiempo(lista):
+def medir_tiempo_bubble(lista):
     inicio = time.time()
     bubble_sort(lista)
     fin = time.time()
     return fin - inicio
 
-# Pruebas
-tamanos = [1000, 10000, 100000]  
+# =============================
+# PRUEBAS
+# =============================
+if __name__ == "__main__":
+    print("===== BUBBLE SORT =====")
+    tamanos = [1000, 10000, 100000]
 
-for n in tamanos:
-    # Lista aleatoria
-    lista_aleatoria = [random.randint(0, n) for _ in range(n)]
-    tiempo_aleatorio = medir_tiempo(lista_aleatoria.copy())
-    print(f"Bubble Sort con {n} elementos aleatorios: {tiempo_aleatorio:.4f} segundos")
-
-# Lista ya ordenada (10,000)
-lista_ordenada = list(range(10000))
-tiempo_ordenada = medir_tiempo(lista_ordenada.copy())
-print(f"Bubble Sort con 10,000 elementos ordenados: {tiempo_ordenada:.4f} segundos")
-
-# Lista inversa (10,000)
-lista_inversa = list(range(10000, 0, -1))
-tiempo_inversa = medir_tiempo(lista_inversa.copy())
-print(f"Bubble Sort con 10,000 elementos en orden inverso: {tiempo_inversa:.4f} segundos")
+    for n in tamanos:
+        lista_aleatoria = [random.randint(0, n) for _ in range(n)]
+        print(f"Aleatoria {n:6d}: {medir_tiempo_bubble(lista_aleatoria.copy()):.4f} s")
+        print(f"Ordenada  {n:6d}: {medir_tiempo_bubble(list(range(n))):.4f} s")
+        print(f"Inversa   {n:6d}: {medir_tiempo_bubble(list(range(n, 0, -1))):.4f} s")

@@ -1,13 +1,14 @@
-#!/usr/bin/env python3
+import time
 
-# Generador congruencial simple para no usar random
+# =============================
+# SHELL SORT
+# =============================
 seed = 123456
 def pseudo_rand():
     global seed
     seed = (1103515245 * seed + 12345) & 0x7fffffff
     return seed
 
-# Shell Sort
 def shell_sort(arr):
     gap = len(arr) // 2
     while gap > 0:
@@ -23,27 +24,21 @@ def shell_sort(arr):
 def genera_aleatoria(n):
     return [pseudo_rand() % 100000 for _ in range(n)]
 
-def mide(nombre, arr):
-    import time
-    t0 = time.time()
+def medir_tiempo_shell(arr):
+    inicio = time.time()
     shell_sort(arr)
-    t1 = time.time()
-    print(f"{nombre}: {t1 - t0:.6f} segundos")
+    fin = time.time()
+    return fin - inicio
 
-def main():
-    # Tamaños solicitados
-    arr1 = genera_aleatoria(1000)
-    arr2 = genera_aleatoria(10000)
-    arr3 = genera_aleatoria(100000)
-
-    arr_sorted = list(range(10000))          # ya ordenados
-    arr_reverse = list(range(10000, 0, -1))  # inversos
-
-    mide("1000 aleatorios", arr1)
-    mide("10000 aleatorios", arr2)
-    mide("100000 aleatorios", arr3)
-    mide("10000 ordenados", arr_sorted)
-    mide("10000 inversos", arr_reverse)
-
+# =============================
+# PRUEBAS
+# =============================
 if __name__ == "__main__":
-    main()
+    print("===== SHELL SORT =====")
+    tamanos = [1000, 10000, 100000]
+
+    for n in tamanos:
+        arr = genera_aleatoria(n)
+        print(f"Aleatoria {n:6d}: {medir_tiempo_shell(arr.copy()):.6f} s")
+        print(f"Ordenada  {n:6d}: {medir_tiempo_shell(list(range(n))):.6f} s")
+        print(f"Inversa   {n:6d}: {medir_tiempo_shell(list(range(n, 0, -1))):.6f} s")

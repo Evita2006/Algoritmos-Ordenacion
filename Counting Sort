@@ -1,6 +1,9 @@
-import random
 import time
+import random
 
+# =============================
+# COUNTING SORT
+# =============================
 def counting_sort(arr):
     if not arr:
         return arr
@@ -16,34 +19,24 @@ def counting_sort(arr):
             arr[index] = i
             index += 1
             count[i] -= 1
-
     return arr
 
-
-# Listas aleatorias
-sizes = [1000, 10000, 100000]
-
-print("\n--- Pruebas con listas aleatorias ---")
-for size in sizes:
-    arr = [random.randint(0, 1000) for _ in range(size)]
-    start = time.time()
+def medir_tiempo_counting(arr):
+    inicio = time.time()
     counting_sort(arr)
-    end = time.time()
-    print(f"Tamaño: {size:6d} → Tiempo: {end - start:.6f} s")
+    fin = time.time()
+    return fin - inicio
 
+# =============================
+# PRUEBAS
+# =============================
+if __name__ == "__main__":
+    print("===== COUNTING SORT =====")
+    tamanos = [1000, 10000, 100000]
 
-# Lista ya ordenada
-sorted_list = list(range(10000))
-start = time.time()
-counting_sort(sorted_list)
-end = time.time()
-print("\n--- Prueba con lista ordenada (10000) ---")
-print(f"Tiempo: {end - start:.6f} s")
+    for n in tamanos:
+        arr = [random.randint(0, 1000) for _ in range(n)]
+        print(f"Aleatoria {n:6d}: {medir_tiempo_counting(arr.copy()):.6f} s")
+        print(f"Ordenada  {n:6d}: {medir_tiempo_counting(list(range(n))):.6f} s")
+        print(f"Inversa   {n:6d}: {medir_tiempo_counting(list(range(n, 0, -1))):.6f} s")
 
-# Lista inversamente ordenada
-reverse_list = list(range(9999, -1, -1))
-start = time.time()
-counting_sort(reverse_list)
-end = time.time()
-print("\n--- Prueba con lista inversa (10000) ---")
-print(f"Tiempo: {end - start:.6f} s")
